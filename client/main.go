@@ -47,16 +47,15 @@ func main() {
 }
 
 func handleNewMessage(conn *websocket.Conn) {
+	greenWriter := color.New(color.FgGreen).Add(color.Underline).Add(color.Bold)
+	whiteWriter := color.New(color.FgWhite).Add(color.Bold)
+	yellowWriter := color.New(color.FgYellow)
+
 	for {
 		_, msg, err := conn.ReadMessage()
 		if err != nil {
 			log.Fatalf("error while reading: %s\n", err.Error())
 		}
-
-		greenWriter := color.New(color.FgGreen).Add(color.Underline).Add(color.Bold)
-		whiteWriter := color.New(color.FgWhite).Add(color.Bold)
-		yellowWriter := color.New(color.FgYellow)
-
 		msgSplitted := strings.Split(string(msg), ": ")
 		if len(msgSplitted) == 2 {
 			whiteWriter.Print(msgSplitted[0], ": ")
